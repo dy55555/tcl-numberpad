@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tclhotkey.floatnum"
+    android:versionCode="9"
+    android:versionName="1.8">
+
+    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="30" />
+
+    <!-- 悬浮窗权限：数字键盘要盖在其他 app 上面 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <!-- 调电视本机的换台接口需要网络栈权限（走 localhost，不实际联网） -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- android:icon 原来用的是系统自带的 @android:drawable/ic_menu_edit（一个铅笔），
+         电视桌面上跟其他应用完全分不出来。现在换成 res/mipmap-*/ic_launcher.png
+         —— 图标内容就是键盘界面本体缩小版（顶部琥珀色频道号条 + 3x4 键位）。
+
+         ★ 五档尺寸用的是 108dp 规格（108/160/216/324/432），不是 Android 标准的
+           48dp。电视 density=1.5，108dp x 1.5 ≈ 160px，正好是桌面图标槽位实测尺寸
+           （v7_tv_apps.png 里量到的图标盒是 160px）。用标准 48dp 的话图标只有 72px，
+           上电视会比「按键改键器」小一圈。-->
+    <application
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="true"
+        android:usesCleartextTraffic="true">
+
+        <activity
+            android:name="com.tclhotkey.floatnum.KeyboardActivity"
+            android:label="@string/app_name"
+            android:icon="@mipmap/ic_launcher"
+            android:excludeFromRecents="true"
+            android:taskAffinity="com.tclhotkey.floatnum.pad"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+</manifest>
